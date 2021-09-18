@@ -9,19 +9,24 @@
 </head>
 <body>
 
-<a class="btn btn-primary" href="{{route('party.create')}}"> Add Party </a>
-<a class="btn btn-primary" href="{{route('candidate.create')}}"> Add Candidates </a>
-
+<div style="display: flex;">
 <div>
+<a class="btn btn-success" href="{{route('party.create')}}"> Add Party </a>
+
+</div>
+
+<div style="margin-left: auto; margin-right: 0 ;">
+
        <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
                                 <x-jet-dropdown-link href="{{ route('logout') }}"
                                          onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                    {{ __('Log Out') }}
+                                   <div class="btn btn-danger"> {{ __('Log Out') }}</div>
                                 </x-jet-dropdown-link>
-                            </form>
+            </form>
+</div>
 </div>
 
 <table class="table table-sm">
@@ -38,6 +43,7 @@
 <thead>
     <th>Party Name</th>
     <th>Party Logo</th>
+    <th>Candidates</th>
     <th>Action</th>
     
 
@@ -48,6 +54,7 @@
         <tr>
             <td>{{$party->name}}</td> 
             <td><img src="{{ asset('party_logos/'. $party->party_logo) }}" alt="image" width="100" height="100"></td>
+            <td><a class="btn btn-primary" href="{{route('candidate.create', [$party->id])}}"> Add Candidates </a></td>
             <td>
 
             <form action="{{ route('party.destroy', [$party->id])}}" method="POST">@csrf

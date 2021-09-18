@@ -23,12 +23,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-
-
 
 Route::group(['middleware'=> ['auth:sanctum', 'verified', 'accessrole']], function(){
 
@@ -40,8 +34,8 @@ Route::get('/dashboard', function () {
 
 Route::resource('/party', 'PartyController', [
             'names' => [
-                'index' => 'party',
-                'create' => 'party.create',
+                'index' => 'party.index',
+                // 'create' => 'party.create',
                 'store' => 'party.store',
                 'show' => 'party.show',
                 'edit' => 'party.edit',
@@ -51,17 +45,17 @@ Route::resource('/party', 'PartyController', [
 
                 ]);
 
-Route::resource('/candidate', 'CandidateController');
+Route::resource('/candidate', 'CandidateController', [
+                'names' => [
+                'index' => 'candidate',
+                'create' => 'candidate.create', 
+                'store' => 'candidate.store',
+                'show' => 'candidate.show',
+                'edit' => 'candidate.edit',
+                'update' => 'candidate.update',
+                'destroy' => 'candidate.destroy',
+                ]
+                
+                ]);
 
 });
-
-// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    
-//     return view('dashboard');
-
-//     })->name('dashboard');
-
-// Route::get('redirects', 'AuthController@index' );
-
-// Route::resource('/party', 'PartyController')->middleware('auth');
-// Route::resource('/candidate', 'CandidateController')->middleware('auth');

@@ -28,7 +28,7 @@
 
             <div class="form-group">
                 <label>Candidate Party Id</label>
-                <input type="text" class="form-control" name="address">
+                <input type="text" class="form-control" name="candidateId">
             </div>
 
             <input type="submit" value="Submit" class="btn btn-dark btn-block">

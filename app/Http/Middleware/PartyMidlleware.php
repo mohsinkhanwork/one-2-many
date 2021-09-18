@@ -17,13 +17,13 @@ class PartyMidlleware
      */
     public function handle(Request $request, Closure $next)
     {
-        echo 'the Midlleware is running. <br/>';
+        echo 'the Middleware is running. <br/>';
         $userRole = auth()->user()->role;
-        $currebtRouteName = Route::currentRouteName();
+        $currentRouteName = Route::currentRouteName();
         echo 'UserRole:'. $userRole . '<br/>';
-        echo 'Current Route Name: ' . $currebtRouteName . '<br/>';
+        echo 'Current Route Name: ' . $currentRouteName . '<br/>';
         
-        if(in_array($currebtRouteName, $this->userAccessRole()[$userRole])) {
+        if(in_array($currentRouteName, $this->userAccessRole()[$userRole])) {
 
         return $next($request);
 
@@ -45,13 +45,23 @@ class PartyMidlleware
 
             'admin' => [
 
-                'party',
+                'party.index',
                 'party.create',
                 'party.store',
                 'party.show',
                 'party.edit',
                 'party.update',
-                'party.destroy'
+                'party.destroy',
+
+                'dashboard',
+
+                'candidate',
+                'candidate.create',
+                'candidate.store',
+                'candidate.show',
+                'candidate.edit',
+                'candidate.update',
+                'candidate.destroy'
             ],
         ]; 
     }
