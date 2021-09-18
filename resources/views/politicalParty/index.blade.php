@@ -37,7 +37,7 @@
             <a class="close" data-dismiss="alert">×</a>
             <strong>Congratulations!</strong> {!!Session::get('msg')!!}
         </div>
-    @endif
+@endif
 
 
 <thead>
@@ -54,7 +54,7 @@
         <tr>
             <td>{{$party->name}}</td> 
             <td><img src="{{ asset('party_logos/'. $party->party_logo) }}" alt="image" width="100" height="100"></td>
-            <td><a class="btn btn-primary" href="{{route('candidate.create', [$party->id])}}"> Add Candidates </a></td>
+            <td><a class="btn btn-primary" href="{{route('candidate.CreateCandidate', [$party->id])}}"> Add Candidates </a></td>
             <td>
 
             <form action="{{ route('party.destroy', [$party->id])}}" method="POST">@csrf

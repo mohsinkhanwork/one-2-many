@@ -47,7 +47,7 @@ Route::resource('/party', 'PartyController', [
 
 Route::resource('/candidate', 'CandidateController', [
                 'names' => [
-                'index' => 'candidate',
+                'index' => 'candidate.index',
                 'create' => 'candidate.create', 
                 'store' => 'candidate.store',
                 'show' => 'candidate.show',
@@ -57,5 +57,8 @@ Route::resource('/candidate', 'CandidateController', [
                 ]
                 
                 ]);
+
+Route::get('/CreateCandidate/{partyID}', 'CandidateController@CreateCandidate')->name('candidate.CreateCandidate');
+
 
 });

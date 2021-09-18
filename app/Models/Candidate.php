@@ -9,12 +9,12 @@ class Candidate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'candiate_id', 'party_id'];
+    protected $fillable = ['name', 'candidate_id', 'party_id'];
 
 
      public function Party() {
 
-        return $this->belongsTo('App\Models\Party');
+        return $this->belongsTo(Party::class, 'party_id', 'id');
 }
 
 }

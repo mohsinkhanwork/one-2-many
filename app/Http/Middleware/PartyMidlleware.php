@@ -55,11 +55,12 @@ class PartyMidlleware
 
                 'dashboard',
 
-                'candidate',
+                'candidate.index',
                 'candidate.create',
                 'candidate.store',
                 'candidate.show',
                 'candidate.edit',
+                'candidate.CreateCandidate',
                 'candidate.update',
                 'candidate.destroy'
             ],

@@ -15,16 +15,12 @@ class CandidateController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
-       $Candidate = Candidate::with('Party')->find(2);
+       $Candidate = Candidate::with('Party')->get();
 
-       dd($Candidate);
+       return view('candidates.index', compact('Candidate'));
     }
 
     /**
@@ -32,10 +28,18 @@ class CandidateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    
+
+  public function CreateCandidate($id)
     {
-        return view('candidates.create');
+        $party = Party::find($id);
+        // dd($party);
+        return view('candidates.create', compact('party'));
     }
+
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -45,7 +49,20 @@ class CandidateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $this->validator($request);
+
+        // $data = $request->all();
+
+        $product = Candidate::create([
+        'name' => $request['name'],
+        'candidate_id' => $request['candidate_id'],
+        'party_id' =>$request['party_id']
+    ]);
+
+        return redirect('candidate')->with('success', 'candidate added successfully');      //for success message the redirect should be used
+
+
+
     }
 
     /**
@@ -91,5 +108,13 @@ class CandidateController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function validator($request){
+
+        $request->validate([
+            'name'=>'required',
+            'candidate_id'=>'required'
+        ]);
     }
 }

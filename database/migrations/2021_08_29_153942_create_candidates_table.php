@@ -16,9 +16,12 @@ class CreateCandidatesTable extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->integer('candiate_id')->nullable();
-            $table->unsignedInteger('party_id')->references('id')->on('parties')->onDelete('cascade');
+            $table->string('candidate_id')->nullable();
+            $table->unsignedBigInteger('party_id');
             $table->timestamps();
+
+
+            $table->foreign('party_id')->references('id')->on('parties')->onDelete('cascade');
         });
     }
 

@@ -19,6 +19,9 @@
 
        <form action="{{route('candidate.store')}}" method="POST" enctype= "multipart/form-data">
 
+        <input type="hidden" name="party_id" value="{{$party->id}}">
+
+
         @csrf
 
             <div class="form-group">
@@ -27,8 +30,9 @@
             </div>
 
             <div class="form-group">
-                <label>Candidate Party Id</label>
-                <input type="text" class="form-control" name="candidateId">
+                <label>Candidate Party Id</label>   
+                
+                <input type="text" class="form-control" name="candidate_id">
             </div>
 
             <input type="submit" value="Submit" class="btn btn-dark btn-block">
