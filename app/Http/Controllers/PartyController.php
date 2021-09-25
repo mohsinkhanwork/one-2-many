@@ -70,8 +70,8 @@ class PartyController extends Controller
 
             Party::create($party);
 
-            \Session::flash('msg', 'Party Added successfully' );
-            return redirect()->route('party.index');
+            
+            return redirect()->route('party.index')->with('success', 'Party Added successfully');
     }
  
      
@@ -169,8 +169,7 @@ class PartyController extends Controller
 
         }
 
-        \Session::flash('msg', 'Party Deleted successfully.' );
-         return redirect()->route('party.index')->with('sucess', 'Party Deleted successfully');
+         return redirect()->back()->with('success', 'Party Deleted successfully');
 
     }
 }

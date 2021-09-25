@@ -4,10 +4,10 @@
             {{ __('Party Dashboard') }}
         </h2>
     </x-slot>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
 
  <div class="container mt-5">
@@ -31,30 +31,32 @@
                 </div>
         @endif
 
-       <form action="{{route('candidate.store')}}" method="POST" enctype= "multipart/form-data">
+       <form action="{{route('candidate.update', [$candidate->id])}}" method="POST" enctype= "multipart/form-data">
 
         <input type="hidden" name="party_id" value="{{$party->id}}">
 
+        @method('PUT')
 
-        @csrf
+   @csrf
 
             <div class="form-group">
                 <label>Candidate Name</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="name" value="{{$candidate->name}}">
             </div>
 
             <div class="form-group">
                 <label>Candidate Party Id</label>   
                 
-                <input type="text" class="form-control" name="candidate_id">
+                <input type="text" class="form-control" name="candidate_id" value="{{$candidate->candidate_id}}">
             </div>
-              @error('party_logo')
+              @error('candidate_id')
                     <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                     </span>
                 @enderror
 
-            <input type="submit" value="Submit" class="btn btn-dark btn-block">
+            <input type="submit" value="Update" class="btn btn-dark btn-block">
         </form>
     </div>
+    
 </x-app-layout>

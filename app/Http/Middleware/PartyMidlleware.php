@@ -17,11 +17,11 @@ class PartyMidlleware
      */
     public function handle(Request $request, Closure $next)
     {
-        echo 'the Middleware is running. <br/>';
+        // echo 'the Middleware is running. <br/>';
         $userRole = auth()->user()->role;
         $currentRouteName = Route::currentRouteName();
-        echo 'UserRole:'. $userRole . '<br/>';
-        echo 'Current Route Name: ' . $currentRouteName . '<br/>';
+        // echo 'UserRole:'. $userRole . '<br/>';
+        // echo 'Current Route Name: ' . $currentRouteName . '<br/>';
         
         if(in_array($currentRouteName, $this->userAccessRole()[$userRole])) {
 
@@ -29,7 +29,7 @@ class PartyMidlleware
 
         } else {
 
-            abort(403, 'You are not allowed');
+            abort(403, 'You are not allowed to access this Page');
         }
 
     }

@@ -1,13 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Party Dashboard') }}
+        </h2>
+    </x-slot>
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Political Parties</title>
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-<body>
+
+
 
 <div style="display: flex;">
 <div>
@@ -29,15 +33,14 @@
 </div>
 </div>
 
+@if( Session::has('success'))
+  <div class="alert alert-success">
+    <p>{{ Session::get('success') }}</p>
+  </div>
+  @endif
+
 <table class="table table-sm">
 
-
-@if(Session::has('msg'))
-        <div class="alert alert-info">
-            <a class="close" data-dismiss="alert">×</a>
-            <strong>Congratulations!</strong> {!!Session::get('msg')!!}
-        </div>
-@endif
 
 
 <thead>
@@ -54,7 +57,7 @@
         <tr>
             <td>{{$party->name}}</td> 
             <td><img src="{{ asset('party_logos/'. $party->party_logo) }}" alt="image" width="100" height="100"></td>
-            <td><a class="btn btn-primary" href="{{route('candidate.CreateCandidate', [$party->id])}}"> Add Candidates </a></td>
+            <td><a class="btn btn-primary" href="{{route('candidate.index', [$party->id])}}"> Show Candidates </a></td>
             <td>
 
             <form action="{{ route('party.destroy', [$party->id])}}" method="POST">@csrf
@@ -79,9 +82,4 @@
 
 </table>
 
-
-
-
-    
-</body>
-</html>
+</x-app-layout>

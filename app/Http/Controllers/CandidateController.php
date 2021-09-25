@@ -16,11 +16,11 @@ class CandidateController extends Controller
      */
 
 
-    public function index()
+    public function index($id)
     {
-       $Candidate = Candidate::with('Party')->get();
-
-       return view('candidates.index', compact('Candidate'));
+       $party = Party::find($id);
+        $candidates = Candidate::query()->where('party_id', $id)->get();
+        return view('candidates.index', compact('party','candidates'));
     }
 
     /**
@@ -59,7 +59,7 @@ class CandidateController extends Controller
         'party_id' =>$request['party_id']
     ]);
 
-        return redirect('candidate')->with('success', 'candidate added successfully');      //for success message the redirect should be used
+        return redirect()->route('candidate.index',[$request->party_id])->with('success', 'candidate added successfully');      //for success message the redirect should be used
 
 
 
@@ -73,7 +73,11 @@ class CandidateController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $candidate = Candidate::findOrFail($id)->first();
+
+        return view('candidates.show', compact('candidate'));
+        
     }
 
     /**
@@ -82,9 +86,13 @@ class CandidateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($CanID, $PartID)
     {
-        //
+        $candidate = Candidate::findOrFail($CanID);
+
+        $party = Party::findOrFail($PartID);
+
+        return view('candidates.edit', compact('candidate', 'party'));
     }
 
     /**
@@ -96,7 +104,16 @@ class CandidateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validator($request);
+
+        $candidate = Candidate::findOrFail($id);
+        
+        $input = $request->all();
+        $candidate->update($input);
+
+        return redirect()->route('candidate.index',[$request->party_id])->with('success', 'candidate Updated successfully');
+
+
     }
 
     /**
@@ -107,14 +124,17 @@ class CandidateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $candidate = Candidate::findOrFail($id)->delete();
+
+        return redirect()->back()->with('success', 'candidate deleted successfully');
+
     }
 
     public function validator($request){
 
         $request->validate([
             'name'=>'required',
-            'candidate_id'=>'required'
+            'candidate_id'=>'required|unique:candidates|digits_between:2,20'
         ]);
     }
 }

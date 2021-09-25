@@ -8,22 +8,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Political Parties</title>
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<a class="btn btn-primary" href="{{route('party.index')}}"> Back  </a>
+
 
 <div class="col-7" style="display: flex; justify-content: center;">
 
 <div class="card" style="width: 18rem;">
-    <div style="width: 100%; border: 1px solid darkgrey;text-align: center;">
- <img src="{{asset('party_logos/'. $party->party_logo )}}" width="125px" height="125px"> 
-  </div>
+   
   <div class="card-body">
-    <h4 class="card-title"> Name: {{$party->name}}</h4>
+    <h4 class="card-title"> Name: {{$candidate->name}}</h4>
+    <h3 class="card-title"> ID: {{$candidate->candidate_id}}</h3>
  
     <p class="card-text">
 
-    Details of the Party: -
+    Details of the Candidate <span style="font-weight: bold;">(confidential)</span> :-
     <details>
          <summary>Please click me for the details </summary>
          <br>

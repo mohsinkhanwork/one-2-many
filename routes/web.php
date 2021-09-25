@@ -35,7 +35,7 @@ Route::get('/dashboard', function () {
 Route::resource('/party', 'PartyController', [
             'names' => [
                 'index' => 'party.index',
-                // 'create' => 'party.create',
+                'create' => 'party.create',
                 'store' => 'party.store',
                 'show' => 'party.show',
                 'edit' => 'party.edit',
@@ -59,6 +59,8 @@ Route::resource('/candidate', 'CandidateController', [
                 ]);
 
 Route::get('/CreateCandidate/{partyID}', 'CandidateController@CreateCandidate')->name('candidate.CreateCandidate');
+Route::get('/candidateIndex/{partyID}', 'CandidateController@index')->name('candidate.index');
+Route::get('/EditCandidate/{CanID}/PartyID/{PartID}', 'CandidateController@edit')->name('candidate.edit');
 
 
 });
