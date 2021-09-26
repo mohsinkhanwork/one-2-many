@@ -48,14 +48,14 @@
     <th>Party Logo</th>
     <th>Candidates</th>
     <th>Action</th>
-    
+
 
 </thead>
 <tbody>
-    
+
     @foreach($parties as $party)
         <tr>
-            <td>{{$party->name}}</td> 
+            <td>{{$party->name}}</td>
             <td><img src="{{ asset('party_logos/'. $party->party_logo) }}" alt="image" width="100" height="100"></td>
             <td><a class="btn btn-primary" href="{{route('candidate.index', [$party->id])}}"> Show Candidates </a></td>
             <td>
@@ -69,15 +69,15 @@
                 <i class="fas fa-trash fa-lg text-danger"></i>
 
             </button>
-                
+
 
             </form>
 
 
-             </td> 
+             </td>
         </tr>
     @endforeach
-  
+
 </tbody>
 
 </table>

@@ -19,18 +19,18 @@
 
                 <div class="row" style="margin-top: 1%;">
                     <div class="col-md-2 col-12">
-                        
+
                     </div>
                     <div class="col-md-8 col-12">
                     <a href="{{route('party.index')}}" class="btn btn-primary" target="_blank">Party Project</a>
-                        
+                    <br>
+                    <br>
+                        <a href="#" class="btn btn-primary" target="_blank">Laravel API</a>
                     </div>
-                    <div class="col-md-2 col-12">
-                        
-                    </div>
-                </div>  
 
-    
+
+
+                </div>
 
 @endif
 
