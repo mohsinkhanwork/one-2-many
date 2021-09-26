@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use app\Http\Controllers\PartyController;
 use app\Http\Controllers\CandidateController;
 use app\Http\Controllers\AuthController;
+use app\Http\Controllers\apiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::get('/', function () {
 Route::group(['middleware'=> ['auth:sanctum', 'verified', 'accessrole']], function(){
 
 Route::get('/dashboard', function () {
-    
+
     return view('dashboard');
 
     })->name('dashboard');
@@ -48,19 +49,21 @@ Route::resource('/party', 'PartyController', [
 Route::resource('/candidate', 'CandidateController', [
                 'names' => [
                 'index' => 'candidate.index',
-                'create' => 'candidate.create', 
+                'create' => 'candidate.create',
                 'store' => 'candidate.store',
                 'show' => 'candidate.show',
                 'edit' => 'candidate.edit',
                 'update' => 'candidate.update',
                 'destroy' => 'candidate.destroy',
                 ]
-                
+
                 ]);
 
 Route::get('/CreateCandidate/{partyID}', 'CandidateController@CreateCandidate')->name('candidate.CreateCandidate');
 Route::get('/candidateIndex/{partyID}', 'CandidateController@index')->name('candidate.index');
 Route::get('/EditCandidate/{CanID}/PartyID/{PartID}', 'CandidateController@edit')->name('candidate.edit');
+Route::get('party_candidate_Apis', 'apiController@index')->name('api.index');
+
 
 
 });

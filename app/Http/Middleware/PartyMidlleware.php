@@ -22,7 +22,7 @@ class PartyMidlleware
         $currentRouteName = Route::currentRouteName();
         // echo 'UserRole:'. $userRole . '<br/>';
         // echo 'Current Route Name: ' . $currentRouteName . '<br/>';
-        
+
         if(in_array($currentRouteName, $this->userAccessRole()[$userRole])) {
 
         return $next($request);
@@ -34,7 +34,7 @@ class PartyMidlleware
 
     }
 
-    
+
     private function userAccessRole() {
 
         return [
@@ -62,8 +62,10 @@ class PartyMidlleware
                 'candidate.edit',
                 'candidate.CreateCandidate',
                 'candidate.update',
-                'candidate.destroy'
+                'candidate.destroy',
+
+                'api.index'
             ],
-        ]; 
+        ];
     }
 }

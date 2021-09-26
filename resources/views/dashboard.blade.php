@@ -25,8 +25,9 @@
                     <a href="{{route('party.index')}}" class="btn btn-primary" target="_blank">Party Project</a>
                     <br>
                     <br>
-                        <a href="#" class="btn btn-primary" target="_blank">Laravel API</a>
+                        <a href="{{ route('api.index') }}" class="btn btn-primary" target="_blank">Laravel API</a>
                     </div>
+
 
 
 
