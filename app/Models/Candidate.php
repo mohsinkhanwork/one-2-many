@@ -9,12 +9,18 @@ class Candidate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'candidate_id', 'party_id'];
+    protected $fillable = ['name', 'candidate_id', 'party_id', 'user_id'];
 
 
      public function Party() {
 
         return $this->belongsTo(Party::class, 'party_id', 'id');
-}
+      }
+
+     public function user() {
+
+        return $this->belongsTo(User::class, 'user_id', 'id');
+      }
+    
 
 }

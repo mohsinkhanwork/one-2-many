@@ -22,7 +22,11 @@ class PartyController extends Controller
     public function index()
     {
         $parties = Party::with('candidate')->get();
-        return view('politicalParty.index', compact('parties'));
+        // dd($parties);
+
+        $candidate_delete_request_Noti = Candidate::with('Party')->whereNotNull('delete_request')->get()->all();
+        // dd($candidate_delete_request_Noti);
+        return view('politicalParty.index', compact('parties', 'candidate_delete_request_Noti'));
         
         // $candidate = $party->candidate;
 

@@ -3,6 +3,8 @@
 use App\Models\Party;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\apipartyController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,22 +17,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/party', function () {
+// Route::get('/party', function () {
 
-return Party::all();
+// return Party::all();
 
+// });
+
+// Route::post('/party', function () {
+
+//         return Party::create([
+//             'name' => 'PTI',
+//             'party_logo' => 'BAT'
+//         ]);
+// });
+
+//public routes
+// Route::resource('/party', 'apipartyController');
+Route::get('/party', [apipartyController::class, 'index']);
+Route::get('/party/{id}', [apipartyController::class, 'show']);
+Route::get('/party/search/{name}', [apipartyController::class, 'search']);
+// Route::post('/register', [AuthController::class,'register']);
+// Route::post('/login', [AuthController::class,'login']);
+
+Route::post('/party', [apipartyController::class, 'store']);
+Route::put('/party/{id}', [apipartyController::class, 'update']);
+Route::delete('/party/{id}', [apipartyController::class, 'destroy']);
+
+
+
+
+
+//protected routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+   
+
+ // Route::post('/logout', [AuthController::class,'logout']);
 });
 
-Route::post('/party', function () {
-
-        return Party::create([
-            'name' => 'PTI',
-            'party_logo' => 'BAT'
-        ]);
-});
-
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });

@@ -17,11 +17,14 @@ class CreateCandidatesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('candidate_id')->nullable();
+            $table->string('delete_request')->nullable();
             $table->unsignedBigInteger('party_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
 
             $table->foreign('party_id')->references('id')->on('parties')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

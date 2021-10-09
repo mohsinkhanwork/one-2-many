@@ -46,24 +46,23 @@ Route::resource('/party', 'PartyController', [
 
                 ]);
 
-Route::resource('/candidate', 'CandidateController', [
-                'names' => [
-                'index' => 'candidate.index',
-                'create' => 'candidate.create',
-                'store' => 'candidate.store',
-                'show' => 'candidate.show',
-                'edit' => 'candidate.edit',
-                'update' => 'candidate.update',
-                'destroy' => 'candidate.destroy',
-                ]
-
-                ]);
+Route::resource('/candidate', 'CandidateController');
 
 Route::get('/CreateCandidate/{partyID}', 'CandidateController@CreateCandidate')->name('candidate.CreateCandidate');
-Route::get('/candidateIndex/{partyID}', 'CandidateController@index')->name('candidate.index');
-Route::get('/EditCandidate/{CanID}/PartyID/{PartID}', 'CandidateController@edit')->name('candidate.edit');
+Route::get('/candidateIndex/{partyID}', 'CandidateController@can_index')->name('candidate.can_index');
+Route::get('/EditCandidate/{CanID}/PartyID/{PartID}', 'CandidateController@can_edit')->name('candidate.can_edit');
 Route::get('party_candidate_Apis', 'apiController@index')->name('api.index');
 
+Route::get('/request-for-deletion/{candidate_id}', 'CandidateController@deleteRequest')->name('candidate.deleteRequest');
+Route::post('/searchCandidateID/', 'CandidateController@searchCanId')->name('candidate.searchCanId');
 
 
+
+Route::Delete('/DeleteCandidateID/{CanDelID}','CandidateController@DeleteCandidateID')->name('candidate.DeleteCandidateID');
+
+});
+
+Route::any('/test_page', function() {
+    
+    return view('testpage');
 });

@@ -20,8 +20,8 @@ class PartyMidlleware
         // echo 'the Middleware is running. <br/>';
         $userRole = auth()->user()->role;
         $currentRouteName = Route::currentRouteName();
-        // echo 'UserRole:'. $userRole . '<br/>';
-        // echo 'Current Route Name: ' . $currentRouteName . '<br/>';
+        echo 'UserRole:'. $userRole . '<br/>';
+        echo 'Current Route Name: ' . $currentRouteName . '<br/>';
 
         if(in_array($currentRouteName, $this->userAccessRole()[$userRole])) {
 
@@ -43,6 +43,22 @@ class PartyMidlleware
                 'dashboard'
             ],
 
+            'candidate' => [
+
+                'dashboard',
+                'party.index',
+                'party.show',
+                'candidate.index',
+                'candidate.can_index',
+                 'candidate.CreateCandidate',
+                  'candidate.store',
+                  'candidate.show',
+                  'candidate.deleteRequest',
+                  
+
+
+            ],
+
             'admin' => [
 
                 'party.index',
@@ -56,13 +72,17 @@ class PartyMidlleware
                 'dashboard',
 
                 'candidate.index',
+                'candidate.can_index',
                 'candidate.create',
                 'candidate.store',
                 'candidate.show',
+                'candidate.can_edit',
                 'candidate.edit',
                 'candidate.CreateCandidate',
                 'candidate.update',
                 'candidate.destroy',
+                'candidate.searchCanId',
+                'candidate.DeleteCandidateID',
 
                 'api.index'
             ],

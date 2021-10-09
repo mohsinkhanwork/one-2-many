@@ -17,19 +17,8 @@
             Create api routes or go to api routes. or click below <br>
             <details>
                 <div>
-                    Route::get('/party', function () {
-
-                        return Party::all();
-
-                        });
-
-                        Route::post('/party', function () {
-
-                                return Party::create([
-                                    'name' => 'PTI',
-                                    'party_logo' => 'BAT'
-                                ]);
-                        });
+                    
+                    All the data is place in api.php in the routes folder
 
                 </div>
             </details>

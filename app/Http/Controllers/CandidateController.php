@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Candidate;
 use App\Models\Party;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class CandidateController extends Controller
@@ -16,11 +17,40 @@ class CandidateController extends Controller
      */
 
 
-    public function index($id)
+    public function can_index($id)
     {
        $party = Party::find($id);
-        $candidates = Candidate::query()->where('party_id', $id)->get();
-        return view('candidates.index', compact('party','candidates'));
+        $candidates = Candidate::query()->where('party_id', $id)->orderBy('name')->get();
+
+          $user_candidates_only = Candidate::with('user')->where([
+
+            ['party_id', $id],
+            ['user_id', auth()->user()->id]
+
+        ])->first();
+
+
+        // dd($user_candidate_only);
+
+         $candidate_delete_request = Candidate::with('Party')->whereNotNull('delete_request')->get()->all();
+        // dd($candidate_delete_request);
+
+         $user_vote = User::query()->with('candidate')->where('id', auth()->user()->id)->first();
+         // dd($user_vote);
+
+        return view('candidates.index', compact('party','candidates', 'candidate_delete_request', 'user_vote', 'user_candidates_only'));
+    }
+
+    public function searchCanId(Request $request) {
+
+        $candidate_id = Candidate::with('Party')->where('candidate_id', 'LIKE', '%' . $request->q . '%')->first();
+        // dd($candidate_id);
+
+        // $partyID = Party::find($partyID);
+
+        // dd($partyID);
+
+        return view('candidates.searched', compact('candidate_id') );
     }
 
     /**
@@ -56,10 +86,11 @@ class CandidateController extends Controller
         $product = Candidate::create([
         'name' => $request['name'],
         'candidate_id' => $request['candidate_id'],
-        'party_id' =>$request['party_id']
+        'party_id' =>$request['party_id'],
+        'user_id' =>$request['user_id']
     ]);
 
-        return redirect()->route('candidate.index',[$request->party_id])->with('success', 'candidate added successfully');      //for success message the redirect should be used
+        return redirect()->route('candidate.can_index',[$request->party_id])->with('success', 'Vote Casted successfully');      //for success message the redirect should be used
 
 
 
@@ -74,7 +105,9 @@ class CandidateController extends Controller
     public function show($id)
     {
         
-        $candidate = Candidate::findOrFail($id)->first();
+        $candidate = Candidate::find($id);
+
+        // dd($candidate);
 
         return view('candidates.show', compact('candidate'));
         
@@ -86,7 +119,7 @@ class CandidateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($CanID, $PartID)
+    public function can_edit($CanID, $PartID)
     {
         $candidate = Candidate::findOrFail($CanID);
 
@@ -111,7 +144,7 @@ class CandidateController extends Controller
         $input = $request->all();
         $candidate->update($input);
 
-        return redirect()->route('candidate.index',[$request->party_id])->with('success', 'candidate Updated successfully');
+        return redirect()->route('candidate.can_index',[$request->party_id])->with('success', 'candidate Updated successfully');
 
 
     }
@@ -134,7 +167,28 @@ class CandidateController extends Controller
 
         $request->validate([
             'name'=>'required',
-            'candidate_id'=>'required|unique:candidates|digits_between:2,20'
+            'candidate_id'=>'required|unique:candidates|max:20'
         ]);
+    }
+
+
+    public function deleteRequest($candidate_id) {
+
+        $delet_request = Candidate::query()->where('candidate_id', $candidate_id);
+
+        $delet_request->update([
+
+            'delete_request' => 'Please Delete My vote with ID '. $candidate_id,
+        ]);
+
+        return back()->with('success', 'Request sent successfully');
+    }
+
+
+    public function DeleteCandidateID($CanDelID) {
+
+        $canid = Candidate::findOrFail($CanDelID)->delete();
+
+        return redirect()->back()->with('success', 'candidate deleted successfully');
     }
 }

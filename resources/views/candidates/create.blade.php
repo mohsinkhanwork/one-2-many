@@ -34,17 +34,20 @@
        <form action="{{route('candidate.store')}}" method="POST" enctype= "multipart/form-data">
 
         <input type="hidden" name="party_id" value="{{$party->id}}">
+        <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+
+        {{-- {{dd(auth()->user()->id)}} --}}
 
 
         @csrf
 
             <div class="form-group">
-                <label>Candidate Name</label>
+                <label>Your Name</label>
                 <input type="text" class="form-control" name="name">
             </div>
 
             <div class="form-group">
-                <label>Candidate Party Id</label>   
+                <label>NIC (National ID Card # )</label>   
                 
                 <input type="text" class="form-control" name="candidate_id">
             </div>
