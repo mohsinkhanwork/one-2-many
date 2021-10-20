@@ -161,8 +161,29 @@ class PartyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $party_logo)
+    public function destroy($id)
     {
+        // $party = Party::find($id); //Reports is my model
+
+        //  $file_path = public_path('party_logo').'/'.$party->party_logo; 
+
+        //   if(File::exists($file_path)){
+
+        // File::delete($file_path); 
+        // $party->destroy(); 
+
+        // }
+
+        // return response()->json();
+
+        //  // return redirect()->back()->with('success', 'Party Deleted successfully');
+
+    }
+
+    public function deleteParty($id)
+    
+    {
+        
         $party = Party::find($id); //Reports is my model
 
          $file_path = public_path('party_logo').'/'.$party->party_logo; 
@@ -174,7 +195,8 @@ class PartyController extends Controller
 
         }
 
-         return redirect()->back()->with('success', 'Party Deleted successfully');
+        return response()->json();
+
 
     }
 

@@ -32,6 +32,7 @@ Route::get('/dashboard', function () {
     return view('dashboard'); })->name('dashboard');
 
 Route::resource('/party', 'PartyController');
+Route::delete('delete_party/{id}','PartyController@deleteParty');
 
 Route::resource('/candidate', 'CandidateController');
 

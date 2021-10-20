@@ -152,19 +152,15 @@
             </td>
             <td>
 
-            <form id="party_form_delete" action="{{ route('party.destroy', [$party->id])}}" method="POST">@csrf
-                @method('DELETE')
+
+          
                 <a href="{{ route('party.edit', [$party->id])}}"><i class="fas fa-edit"></i></a>
                 <a href="{{ route('party.show', [$party->id])}}"><i class="fas fa-eye"></i></a>
 
-             <button type="submit" title="delete" style="border: none; background-color:transparent;">
+               <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+                <button class="deleteRecord btn btn-danger" data-id="{{ $party->id }}" >Delete Record</button>
 
-                <i class="fas fa-trash fa-lg text-danger"></i>
-
-            </button>
-
-
-            </form>
 
 
              </td>
@@ -196,6 +192,52 @@ window.onclick = function(event) {
   }
 }
 </script>
+
+{{-- action="{{ route('party.destroy', [$party->id])}}" --}}
+
+<script type="text/javascript">
+    
+
+
+$(".deleteRecord").click(function(){
+    var id = $(this).data("id");
+    var token = $("meta[name='csrf-token']").attr("content");
+   
+    $.ajax(
+    {
+        url: "delete_party/"+id,
+        type: 'DELETE',
+        data: {
+            "id": id,
+            "_token": token,
+        },
+        success: function (){
+               swal({
+                      title: "Good job!",
+                      text: "Party Deleted SuccessFully!",
+                      icon: "success",
+                      button: "Ok",
+                    }).then((willDelete) => {
+
+                        if (willDelete) {
+                        window.location.reload();
+                    }
+
+            });
+        },
+
+        error: function() {
+
+            alert('error');
+        },
+    });
+   
+});
+
+
+</script>
+
+
 
 @elseif(auth()->user()->role == 'candidate')
 

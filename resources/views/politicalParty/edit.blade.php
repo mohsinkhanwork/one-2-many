@@ -85,12 +85,9 @@ $(document).ready(function(){
                 },
                 error: function(xhr, status, error) {
 
- 
-                     
-
                          var err = JSON.parse(xhr.responseText);
  
-                        if(err.errors.name == null ){
+                        if(err.errors.name == null ){               //name error is null
 
                             var swal1 = JSON.stringify(err.errors.party_logo).replace(/[\[\]"]+/g, '');
 
@@ -101,7 +98,7 @@ $(document).ready(function(){
                       button: "OK",
                       dangerMode: true,
                     });
-                        }else if(err.errors.party_logo == null ){
+                        }else if(err.errors.party_logo == null ){               //party logo error is null
 
                            var swal2 = JSON.stringify(err.errors.name).replace(/[\[\]"]+/g, '');
                              swal({
@@ -113,7 +110,7 @@ $(document).ready(function(){
                     });
                         }
 
-                        else {
+                        else {                                      //all fields have errors.
 
                              var swal3 = JSON.stringify(err.errors.name + err.errors.party_logo ).replace(/[\[\]"]+/g, '');
 

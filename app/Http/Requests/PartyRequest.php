@@ -25,7 +25,7 @@ class PartyRequest extends FormRequest
     {
         return [
 
-               'name' => 'required|unique:parties|max:255',
+               'name' => 'required|max:255',
                 'party_logo' => 'required|mimes:png,jpg,jpeg'
         ];
     }
