@@ -41,9 +41,10 @@
 
         @csrf
 
+
             <div class="form-group">
                 <label>Your Name</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="name" value="{{auth()->user()->name}}" readonly>
             </div>
 
             <div class="form-group">
@@ -57,7 +58,27 @@
                     </span>
                 @enderror
 
-            <input type="submit" value="Submit" class="btn btn-dark btn-block">
+                <div>
+                    <span style="color: red"> <b>Note: </b> You can vote only Once. Thank You !</span>
+                </div> <br>
+
+            <input type="submit" value="Cast" class="btn btn-dark btn-block">
         </form>
+
+
+{{-- 
+<script type="text/javascript">
+    document.querySelector('#create-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  var formData = new FormData(e.target);
+  fetch("{{ route('candidate.store') }}", { 
+    method: 'POST',
+    body: formData
+  }).then(() => console.log('success'));
+});
+</script> --}}
+
+
+
     </div>
 </x-app-layout>

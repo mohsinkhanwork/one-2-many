@@ -17,7 +17,6 @@ class CreatePartiesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('party_logo')->nullable();
-            // $table->softDeletes();
             $table->timestamps();
         });  
     }

@@ -65,6 +65,8 @@
 
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 @if(auth()->user()->role == 'admin')
@@ -143,19 +145,20 @@
     @foreach($parties as $party)
         <tr>
             <td>{{$party->name}}</td>
-            <td><img src="{{ asset('party_logos/'. $party->party_logo) }}" alt="image" width="100" height="100"></td>
+            <td><img src="{{ asset('party_logo/'. $party->party_logo) }}" alt="image" width="100" height="100"></td>
             <td>
                 <a class="btn btn-primary" href="{{route('candidate.can_index', [$party->id])}}"> Show Candidates </a>
 
             </td>
             <td>
 
-            <form action="{{ route('party.destroy', [$party->id])}}" method="POST">@csrf
+            <form id="party_form_delete" action="{{ route('party.destroy', [$party->id])}}" method="POST">@csrf
                 @method('DELETE')
                 <a href="{{ route('party.edit', [$party->id])}}"><i class="fas fa-edit"></i></a>
                 <a href="{{ route('party.show', [$party->id])}}"><i class="fas fa-eye"></i></a>
 
              <button type="submit" title="delete" style="border: none; background-color:transparent;">
+
                 <i class="fas fa-trash fa-lg text-danger"></i>
 
             </button>

@@ -9,8 +9,9 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PartyRequest;
 use App\Http\Controllers\Controller;
-use Validator;
 use File;
+use Validator;
+use Response;
 
 class PartyController extends Controller
 {
@@ -51,35 +52,37 @@ class PartyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PartyRequest $request)
+    public function store(Request $request)
 
     {
-            
-            $party = $request->validated(); 
+        $validator = Validator::make($request->all(), [
+        'name' => 'required|unique:parties',
+        'party_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      ]);
 
-            $party = $request->all();
-            
+        if ($validator->passes()) {
+        
+        $input['party_logo'] = time().'.'.$request->party_logo->extension();
+        
+        $request->party_logo->move(public_path('party_logo'), $input['party_logo']);
+        
+        $party = new Party;
+        $party->name = $request->name;
+        $party->party_logo = $input['party_logo'];
+        
+        $party->save();
 
-            if ($image = $request->file('party_logo')) {
+        return response()->json();
 
-            $destinationPath = 'party_logos/';
+      } else if ($validator->fails()) {
+                     
+                     return response()->json();
 
-            $imageName =  time().'.'.$image->extension();
-
-            $image->move($destinationPath, $imageName);
-
-            $party['party_logo'] = "$imageName";
-
-                 }
-
-            Party::create($party);
-
-            
-            return redirect()->route('party.index')->with('success', 'Party Added successfully');
-    }
+      } 
+    
+}
  
      
-
 
     /**
      * Display the specified resource.
@@ -102,9 +105,9 @@ class PartyController extends Controller
      */
     public function edit($id)
 
-    {
+    {   
+     
         $party = Party::find($id);
-
         return view('politicalParty.edit', compact('party'));
     }
 
@@ -117,12 +120,12 @@ class PartyController extends Controller
      */
     public function update(PartyRequest $request, $id)
     {
-        $party = $request->validated();          //as we hve used th form 
-        $party = Party::find($id);
 
-        $input = $request->all();
+      
+            $party = Party::find($id);
+            $input = $request->all();
 
-        $file_path = public_path('party_logos').'/'.$party->party_logo; 
+            $file_path = public_path('party_logo').'/'.$party->party_logo; 
 
           if(File::exists($file_path)){
 
@@ -132,7 +135,7 @@ class PartyController extends Controller
 
          if ($image = $request->file('party_logo')) {
 
-            $destinationPath = 'party_logos/';
+            $destinationPath = 'party_logo/';
 
             $imageName = time() . "." . $image->getClientOriginalExtension();
 
@@ -148,9 +151,7 @@ class PartyController extends Controller
 
         $party->update($input);
 
-        \Session::flash('msg', 'Party Updated successfully.' );
-        return redirect()->route('party.index');
-
+        return response()->json();
 
     }
 
@@ -164,7 +165,7 @@ class PartyController extends Controller
     {
         $party = Party::find($id); //Reports is my model
 
-         $file_path = public_path('party_logos').'/'.$party->party_logo; 
+         $file_path = public_path('party_logo').'/'.$party->party_logo; 
 
           if(File::exists($file_path)){
 
@@ -176,4 +177,9 @@ class PartyController extends Controller
          return redirect()->back()->with('success', 'Party Deleted successfully');
 
     }
+
+
+
+
+
 }

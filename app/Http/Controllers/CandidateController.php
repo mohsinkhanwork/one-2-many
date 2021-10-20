@@ -7,6 +7,8 @@ use App\Models\Candidate;
 use App\Models\Party;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Response;
+
 
 class CandidateController extends Controller
 {
@@ -20,12 +22,14 @@ class CandidateController extends Controller
     public function can_index($id)
     {
        $party = Party::find($id);
-        $candidates = Candidate::query()->where('party_id', $id)->orderBy('name')->get();
+
+       $candidates = Candidate::query()->with('user')->where('party_id', $id)->orderBy('name')->get();
+       // dd($candidates);
 
           $user_candidates_only = Candidate::with('user')->where([
 
-            ['party_id', $id],
-            ['user_id', auth()->user()->id]
+            'party_id' => $id,
+            'user_id'=> auth()->user()->id
 
         ])->first();
 
@@ -157,16 +161,18 @@ class CandidateController extends Controller
      */
     public function destroy($id)
     {
+    
         $candidate = Candidate::findOrFail($id)->delete();
 
-        return redirect()->back()->with('success', 'candidate deleted successfully');
+        return Response::json();
+        // return redirect()->back()->with('success', 'candidate deleted successfully');
 
     }
 
     public function validator($request){
 
         $request->validate([
-            'name'=>'required',
+            'user_id' => 'unique:candidates',
             'candidate_id'=>'required|unique:candidates|max:20'
         ]);
     }
@@ -185,10 +191,14 @@ class CandidateController extends Controller
     }
 
 
-    public function DeleteCandidateID($CanDelID) {
+    public function DeleteCandidateID($id) {
 
-        $canid = Candidate::findOrFail($CanDelID)->delete();
 
-        return redirect()->back()->with('success', 'candidate deleted successfully');
+        Candidate::destroy($id);
+          return response()->json([
+        'success' => 'Record has been deleted successfully!'
+    ]);
+
+        // return redirect()->back()->with('success', 'candidate deleted successfully');
     }
 }

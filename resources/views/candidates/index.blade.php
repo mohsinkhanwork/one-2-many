@@ -180,6 +180,7 @@
     <th>#</th>
     <th>Candidates</th>
     <th>Candidate ID</th>
+    <th>Email</th>
     <th>Action</th>
     
 
@@ -192,6 +193,7 @@
             <td>{{$i}}</td> 
             <td>{{$candidate->name}}</td>
             <td>{{$candidate->candidate_id}}</td>
+            <td>{{$candidate->user->email}}</td>
             
             <td>
 
@@ -304,7 +306,7 @@ window.onclick = function(event) {
 
 <thead>
     <th>#</th>
-    <th>Candidates</th>
+    <th>Your Name</th>
     <th>Candidate ID</th>
     <th>Action</th>
     
@@ -323,7 +325,7 @@ window.onclick = function(event) {
 
         
                 <a href="{{ url('/request-for-deletion/'. $user_candidates_only->candidate_id) }}">Request Deleteion</a>
-                <a href="{{ route('candidate.show', [$user_candidates_only->id])}}"><i class="fas fa-eye"></i></a>
+                | <a href="{{ route('candidate.show', [$user_candidates_only->id])}}"><i class="fas fa-eye"></i></a>
 
 
 

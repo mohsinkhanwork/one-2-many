@@ -73,10 +73,7 @@ class PartyMidlleware
 
                 'candidate.index',
                 'candidate.can_index',
-                'candidate.create',
-                'candidate.store',
                 'candidate.show',
-                'candidate.can_edit',
                 'candidate.edit',
                 'candidate.CreateCandidate',
                 'candidate.update',

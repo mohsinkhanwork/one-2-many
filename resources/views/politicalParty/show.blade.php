@@ -16,7 +16,7 @@
 
 <div class="card" style="width: 18rem;">
     <div style="width: 100%; border: 1px solid darkgrey;text-align: center;">
- <img src="{{asset('party_logos/'. $party->party_logo )}}" width="125px" height="125px"> 
+ <img src="{{asset('party_logo/'. $party->party_logo )}}" width="125px" height="125px"> 
   </div>
   <div class="card-body">
     <h4 class="card-title"> Name: {{$party->name}}</h4>

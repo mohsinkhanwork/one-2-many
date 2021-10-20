@@ -9,7 +9,7 @@ class Candidate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'candidate_id', 'party_id', 'user_id'];
+    protected $fillable = ['name', 'candidate_id', 'party_id', 'user_id', 'delete_request'];
 
 
      public function Party() {

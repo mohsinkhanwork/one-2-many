@@ -25,26 +25,13 @@ Route::get('/', function () {
 
 
 
-Route::group(['middleware'=> ['auth:sanctum', 'verified', 'accessrole']], function(){
+Route::group(['middleware'=> ['auth:sanctum']], function(){
 
 Route::get('/dashboard', function () {
 
-    return view('dashboard');
+    return view('dashboard'); })->name('dashboard');
 
-    })->name('dashboard');
-
-Route::resource('/party', 'PartyController', [
-            'names' => [
-                'index' => 'party.index',
-                'create' => 'party.create',
-                'store' => 'party.store',
-                'show' => 'party.show',
-                'edit' => 'party.edit',
-                'update' => 'party.update',
-                'destroy' => 'party.destroy',
-                ]
-
-                ]);
+Route::resource('/party', 'PartyController');
 
 Route::resource('/candidate', 'CandidateController');
 
@@ -56,9 +43,7 @@ Route::get('party_candidate_Apis', 'apiController@index')->name('api.index');
 Route::get('/request-for-deletion/{candidate_id}', 'CandidateController@deleteRequest')->name('candidate.deleteRequest');
 Route::post('/searchCandidateID/', 'CandidateController@searchCanId')->name('candidate.searchCanId');
 
-
-
-Route::Delete('/DeleteCandidateID/{CanDelID}','CandidateController@DeleteCandidateID')->name('candidate.DeleteCandidateID');
+Route::delete('DeleteCandidateID/{id}','CandidateController@DeleteCandidateID');
 
 });
 

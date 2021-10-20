@@ -90,6 +90,10 @@
   </div>
   @endif
 
+   <div class="alert alert-success deleted_searched">
+    <p></p>
+  </div>
+
 <table class="table table-sm">
 
 
@@ -114,11 +118,19 @@
             <td>
 
 
-    <form method="POST" action="{{ route('candidate.DeleteCandidateID', ['CanDelID' => $candidate_id->id]) }}">
-   @csrf
-   {{ method_field('DELETE') }}
-   <button type="submit" class="btn btn-primary">Delete candidate</button>
+
+
+<form >
+
+ <meta name="csrf-token" content="{{ csrf_token() }}">
+
+<button class="deleteProduct" data-id="{{ $candidate_id->id }}" data-token="{{ csrf_token() }}" >Delete Task</button>
+    
+
+    
 </form>
+
+
 
              </td> 
         </tr>
@@ -128,12 +140,48 @@
 </tbody>
 
 </table>
-</div>
-
 
 
 
 @endif
+
+<script type="text/javascript">
+
+  
+$(".deleteProduct").click(function(){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$.ajax(
+{
+    url: "{{'DeleteCandidateID/'. $candidate_id->id}}",
+    type: 'delete', // Just delete Latter Capital Is Working Fine
+    dataType: "JSON",
+    data: {
+        "id": id // method and token not needed in data
+    },
+    success: function (response)
+    {
+        console.log(response); // see the reponse sent
+    },
+    error: function(xhr) {
+     console.log(xhr.responseText); // this line will save you tons of hours while debugging
+    // do something here because of error
+   }
+});
+
+});
+
+
+</script>
+
+
+
+
+
+
 
 
 </x-app-layout>
