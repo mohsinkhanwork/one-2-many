@@ -214,6 +214,14 @@ $(".deleteRecord").click(function(){
         },
         success: function (){
 
+                 swal({
+                      title: "Good job!",
+                      text: "Party Deleted Successfully SuccessFully!",
+                      icon: "success",
+                      button: "Ok",
+                    });
+
+               
                parent.slideUp(300, function () {
                     parent.closest("tr").remove();
                 });

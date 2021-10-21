@@ -127,9 +127,9 @@ class PartyController extends Controller
 
             $file_path = public_path('party_logo').'/'.$party->party_logo; 
 
-          if(File::exists($file_path)){
+            if(File::exists($file_path)){
 
-        File::delete($file_path);
+             File::delete($file_path);
 
         }
 
