@@ -55,12 +55,12 @@ class PartyController extends Controller
     public function store(Request $request)
 
     {
-        $validator = Validator::make($request->all(), [
+        $validated = $request->validate([
         'name' => 'required|unique:parties',
         'party_logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       ]);
 
-        if ($validator->passes()) {
+        if ($validated) {
         
         $input['party_logo'] = time().'.'.$request->party_logo->extension();
         
@@ -74,9 +74,9 @@ class PartyController extends Controller
 
         return response()->json();
 
-      } else if ($validator->fails()) {
+      } else {
                      
-                     return response()->json();
+        return response()->json();
 
       } 
     

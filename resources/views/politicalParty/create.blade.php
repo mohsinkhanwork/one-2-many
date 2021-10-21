@@ -14,16 +14,6 @@
  <div class="container mt-5">
 
      
-
-          @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-        @endif
 <div class="alert" id="message" style="display: none"></div>
        <form  method="post" id="party_create_form"  enctype="multipart/form-data">
 
@@ -79,17 +69,47 @@ $(document).ready(function(){
 
                     });
             },
-            error: function(data) {
+           error: function(xhr, status, error) {
 
-                swal({
+                         var err = JSON.parse(xhr.responseText);
+ 
+                        if(err.errors.name == null ){               //name error is null
+
+                            var swal1 = JSON.stringify(err.errors.party_logo).replace(/[\[\]"]+/g, '');
+
+                             swal({
                       title: "Sorry..!",
-                      text: "The Party name has already been taken",
+                      text: swal1,
                       icon: "warning",
                       button: "OK",
                       dangerMode: true,
                     });
-            }
+                        } else if(err.errors.party_logo == null ){               //party logo error is null
 
+                           var swal2 = JSON.stringify(err.errors.name).replace(/[\[\]"]+/g, '');
+                             swal({
+                      title: "Sorry..!",
+                      text: swal2,
+                      icon: "warning",
+                      button: "OK",
+                      dangerMode: true,
+                    });
+                        }
+
+                        else {                                      //all fields have errors.
+
+                             var swal3 = JSON.stringify(err.errors.name + " and " + err.errors.party_logo ).replace(/[\[\]"]+/g, '');
+
+                             swal({
+                      title: "Sorry..!",
+                      text: swal3,
+                      icon: "warning",
+                      button: "OK",
+                      dangerMode: true,
+                    });
+                             
+                    }
+                }
         });
     });
 });

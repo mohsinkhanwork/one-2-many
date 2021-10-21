@@ -121,12 +121,6 @@
 
 </div>
 
-@if( Session::has('success'))
-  <div class="alert alert-success">
-    <p>{{ Session::get('success') }}</p>
-  </div>
-@endif
-
 
 <table class="table table-sm">
 
@@ -193,18 +187,25 @@ window.onclick = function(event) {
 }
 </script>
 
-{{-- action="{{ route('party.destroy', [$party->id])}}" --}}
 
 <script type="text/javascript">
     
-
-
 $(".deleteRecord").click(function(){
+
     var id = $(this).data("id");
     var token = $("meta[name='csrf-token']").attr("content");
-   
-    $.ajax(
-    {
+    var parent = $(this).parent();
+
+      swal({
+                      title: "Wait..!",
+                      text: "Are You sure, You want to delete Party?",
+                      icon: "warning",
+                      buttons: true,
+                      dangerMode: true,
+                    }).then((willDelete) => {
+
+                        if (willDelete) {
+    $.ajax({
         url: "delete_party/"+id,
         type: 'DELETE',
         data: {
@@ -212,28 +213,24 @@ $(".deleteRecord").click(function(){
             "_token": token,
         },
         success: function (){
-               swal({
-                      title: "Good job!",
-                      text: "Party Deleted SuccessFully!",
-                      icon: "success",
-                      button: "Ok",
-                    }).then((willDelete) => {
 
-                        if (willDelete) {
-                        window.location.reload();
-                    }
-
-            });
+               parent.slideUp(300, function () {
+                    parent.closest("tr").remove();
+                });
         },
-
         error: function() {
 
             alert('error');
         },
     });
+      
+       } else {
+
+             swal("Your Party is safe");
+       }
+});
    
 });
-
 
 </script>
 
