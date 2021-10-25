@@ -44,7 +44,9 @@ Route::get('party_candidate_Apis', 'apiController@index')->name('api.index');
 Route::get('/request-for-deletion/{candidate_id}', 'CandidateController@deleteRequest')->name('candidate.deleteRequest');
 Route::post('/searchCandidateID/', 'CandidateController@searchCanId')->name('candidate.searchCanId');
 
-Route::delete('DeleteCandidateID/{id}','CandidateController@DeleteCandidateID');
+
+Route::delete('delete_candidate/{id}','CandidateController@deleteCandidate');
+
 
 });
 

@@ -54,6 +54,8 @@
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 @if(auth()->user()->role == 'admin')
 
@@ -71,7 +73,9 @@
 <div style="width: 50%;text-align: right;margin-right: 10%;">
     <h1>Party Name</h1>
     @isset($candidate_id)
-    <p>{{$candidate_id->Party->name}}</p>
+    @foreach($candidate_id as $candidate_idd)
+    <p>{{$candidate_idd->Party->name}}</p>
+    @endforeach
     @endisset
 </div>
 
@@ -79,7 +83,9 @@
 <div style="width: 50%;text-align: left;">
     <h1>Party Logo</h1>
     @isset($candidate_id)
-    <p><img src="{{ asset('party_logos/'. $candidate_id->Party->party_logo) }}" alt="image" width="150" height="150"></p>
+    @foreach($candidate_id as $candidate_idd)
+    <p><img src="{{ asset('party_logo/'. $candidate_idd->Party->party_logo) }}" alt="image" width="150" height="150"></p>
+    @endforeach
     @endisset
 </div>
 </div>
@@ -110,31 +116,27 @@
     
     @php $i=1; @endphp
 @if($candidate_id != '')
+    @foreach($candidate_id as $candidate_idd)
         <tr>
             <td>{{$i}}</td> 
-            <td>{{$candidate_id->name}}</td>
-            <td>{{$candidate_id->candidate_id}}</td>
+            <td>{{$candidate_idd->name}}</td>
+            <td>{{$candidate_idd->candidate_id}}</td>
             
             <td>
 
 
 
 
-<form >
-
- <meta name="csrf-token" content="{{ csrf_token() }}">
-
-<button class="deleteProduct" data-id="{{ $candidate_id->id }}" data-token="{{ csrf_token() }}" >Delete Task</button>
-    
-
-    
-</form>
 
 
+               <meta name="csrf-token" content="{{ csrf_token() }}">
+
+                  <button class="delete_candidate btn btn-danger" data-id="{{ $candidate_idd->id }}"> delete candidate </button>    
 
              </td> 
         </tr>
  @php $i++; @endphp
+ @endforeach
 @endif
   
 </tbody>
@@ -147,32 +149,62 @@
 
 <script type="text/javascript">
 
-  
-$(".deleteProduct").click(function(){
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-$.ajax(
-{
-    url: "{{'DeleteCandidateID/'. $candidate_id->id}}",
-    type: 'delete', // Just delete Latter Capital Is Working Fine
-    dataType: "JSON",
-    data: {
-        "id": id // method and token not needed in data
-    },
-    success: function (response)
-    {
-        console.log(response); // see the reponse sent
-    },
-    error: function(xhr) {
-     console.log(xhr.responseText); // this line will save you tons of hours while debugging
-    // do something here because of error
-   }
-});
+$(".delete_candidate").click(function(){
 
+  var id = $(this).data("id");
+  var token = $("meta[name='csrf-token']").attr("content");
+  var parent = $(this).parent();
+
+  swal({
+
+                title: "Wait..!",
+                text: "are you sure ? ",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,   
+              }).then((willdelete) => {
+
+                if (willdelete) {
+
+
+                  $.ajax({
+                      url: "delete_candidate/"+id,
+                      type: 'DELETE',
+                      data: {
+
+                        "id": id,
+                        "_token": token
+                      },
+                      success: function() {
+
+                        swal({
+
+                          title: "Great..!",
+                          text: "you have deleted the candidate successfully",
+                          icon: "success",
+                          button: "OK", 
+
+                        });
+
+                         parent.slideUp(300, function () {
+                         parent.closest("tr").remove();
+                         });
+
+                      },
+                      error: function() {
+
+                        alert('error');
+                      },
+                  });
+
+                } else {
+
+                  swal("Good, Your candidate is safe");
+                }
+
+              }); 
 });
+  
 
 
 </script>

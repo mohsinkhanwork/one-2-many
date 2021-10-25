@@ -35,7 +35,7 @@
 
                 <label>Change Party Logo</label>
 
-                <input type="file" class="form-control" value="{{$party->party_logo}}" name="party_logo">
+                <input type="file" class="form-control"  value="{{ $party->party_logo }}" name="party_logo">
                
             </div>
 

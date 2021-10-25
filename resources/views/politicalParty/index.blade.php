@@ -153,7 +153,7 @@
 
                <meta name="csrf-token" content="{{ csrf_token() }}">
     
-                <button class="deleteRecord btn btn-danger" data-id="{{ $party->id }}" >Delete Record</button>
+                <button class="deleteRecord btn btn-danger" data-id="{{ $party->id }}" > Delete Party </button>
 
 
 
@@ -216,7 +216,7 @@ $(".deleteRecord").click(function(){
 
                  swal({
                       title: "Good job!",
-                      text: "Party Deleted Successfully SuccessFully!",
+                      text: "Party Deleted Successfully!",
                       icon: "success",
                       button: "Ok",
                     });
@@ -275,10 +275,10 @@ $(".deleteRecord").click(function(){
 
 
 <thead>
-    <th>Party Name</th>
-    <th>Party Logo</th>
-    <th>Candidates</th>
-    <th>Action</th>
+    <th> Party Name</th>
+    <th> Party Logo</th>
+    <th> Cast Your vote </th>
+    <th> See Party Details </th>
 
 
 </thead>
@@ -287,7 +287,7 @@ $(".deleteRecord").click(function(){
     @foreach($parties as $party)
         <tr>
             <td>{{$party->name}}</td>
-            <td><img src="{{ asset('party_logos/'. $party->party_logo) }}" alt="image" width="100" height="100"></td>
+            <td><img src="{{ asset('party_logo/'. $party->party_logo) }}" alt="image" width="100" height="100"></td>
             <td><a class="btn btn-primary" href="{{route('candidate.can_index', [$party->id])}}"> Cast Vote </a></td>
             <td>
 

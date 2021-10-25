@@ -101,16 +101,16 @@
 <div>
 <a class="btn btn-success" href="{{route('party.index')}}"> Main Page </a>
 </div>
-@if($candidate_delete_request != '')
+{{-- @if($candidate_delete_request != '') --}}
 <div class="topnav">
  <div class="search-container">
     <form action="{{ route('candidate.searchCanId') }}" method="post"> @csrf
-      <input type="search" placeholder="full Candidate ID" name="q" required="true">
+      <input type="search" placeholder="Enter Full Name of Candidate" name="q" required="true">
       <button type="submit"> Search </button>
     </form>
   </div>
 </div>
-@endif
+{{-- @endif --}}
 
 
 <div style="margin-left: auto; margin-right: 20% ;">
@@ -163,7 +163,7 @@
 
 <div style="width: 50%;text-align: left;">
 	<h1>Party Logo</h1>
-	<p><img src="{{ asset('party_logos/'. $party->party_logo) }}" alt="image" width="150" height="150"></p>
+	<p><img src="{{ asset('party_logo/'. $party->party_logo) }}" alt="image" width="150" height="150"></p>
 </div>
 </div>
 @if( Session::has('success'))
@@ -200,6 +200,7 @@
             <form action="{{ route('candidate.destroy', [$candidate->id])}}" method="POST">@csrf
                 @method('DELETE')
                 {{-- <a href="{{ route('candidate.can_edit', [$candidate->id, $party->id])}}"><i class="fas fa-edit"></i></a> --}}
+
                 <a href="{{ route('candidate.show', [$candidate->id])}}"><i class="fas fa-eye"></i></a>
 
              <button type="submit" title="delete" style="border: none; background-color:transparent;">
@@ -291,7 +292,7 @@ window.onclick = function(event) {
 
 <div style="width: 50%;text-align: left;">
     <h1>Party Logo</h1>
-    <p><img src="{{ asset('party_logos/'. $party->party_logo) }}" alt="image" width="150" height="150"></p>
+    <p><img src="{{ asset('party_logo/'. $party->party_logo) }}" alt="image" width="150" height="150"></p>
 </div>
 </div>
 @if( Session::has('success'))

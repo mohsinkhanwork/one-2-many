@@ -22,6 +22,7 @@ class CandidateController extends Controller
     public function can_index($id)
     {
        $party = Party::find($id);
+       // dd($party);
 
        $candidates = Candidate::query()->with('user')->where('party_id', $id)->orderBy('name')->get();
        // dd($candidates);
@@ -47,7 +48,7 @@ class CandidateController extends Controller
 
     public function searchCanId(Request $request) {
 
-        $candidate_id = Candidate::with('Party')->where('candidate_id', 'LIKE', '%' . $request->q . '%')->first();
+        $candidate_id = Candidate::with('Party')->where('name', 'LIKE', '%' . $request->q . '%')->get();
         // dd($candidate_id);
 
         // $partyID = Party::find($partyID);
@@ -191,13 +192,11 @@ class CandidateController extends Controller
     }
 
 
-    public function DeleteCandidateID($id) {
+    public function deleteCandidate($id) {
 
-
-        Candidate::destroy($id);
-          return response()->json([
-        'success' => 'Record has been deleted successfully!'
-    ]);
+        $candidate = Candidate::find($id);
+        $candidate->delete();
+          return response()->json();
 
         // return redirect()->back()->with('success', 'candidate deleted successfully');
     }

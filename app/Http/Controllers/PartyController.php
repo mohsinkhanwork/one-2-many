@@ -62,7 +62,7 @@ class PartyController extends Controller
 
         if ($validated) {
         
-        $input['party_logo'] = time().'.'.$request->party_logo->extension();
+        $input['party_logo'] = date('YmdHis').'.'.$request->party_logo->extension();
         
         $request->party_logo->move(public_path('party_logo'), $input['party_logo']);
         
@@ -125,19 +125,13 @@ class PartyController extends Controller
             $party = Party::find($id);
             $input = $request->all();
 
-            $file_path = public_path('party_logo').'/'.$party->party_logo; 
-
-            if(File::exists($file_path)){
-
-             File::delete($file_path);
-
-        }
+                                                    // file delete should not be incldued if image is not required field
 
          if ($image = $request->file('party_logo')) {
 
             $destinationPath = 'party_logo/';
 
-            $imageName = time() . "." . $image->getClientOriginalExtension();
+            $imageName = date('YmdHis'). "." . $image->getClientOriginalExtension();
 
             $image->move($destinationPath, $imageName);
 
@@ -145,7 +139,7 @@ class PartyController extends Controller
 
         }else{
 
-            unset($input['party_logo']);
+            unset($input['party_logo']);                    // this will preserves the old input value
 
         }
 
@@ -193,9 +187,12 @@ class PartyController extends Controller
         File::delete($file_path); 
         $party->delete(); 
 
+        } else {
+             $party->delete(); 
+            
+        return response()->json();
         }
 
-        return response()->json();
 
 
     }
